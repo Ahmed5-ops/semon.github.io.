@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070711">
+  <meta name="description" content="Semon — Java developer, creator, coder and Minecraft developer.">
+  <title>Semon — Developer Profile</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+    :root{
+      --bg:#06060d;
+      --bg2:#0b0b16;
+      --panel:rgba(16,16,29,.64);
+      --line:rgba(255,255,255,.10);
+      --text:#f7f7fb;
+      --muted:#9a9aae;
+      --a:#8b5cf6;
+      --b:#22d3ee;
+      --c:#ec4899;
+      --glow:0 0 50px rgba(139,92,246,.18);
+      --radius:24px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,system-ui,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 18% 10%, rgba(139,92,246,.13), transparent 27%),
+        radial-gradient(circle at 82% 15%, rgba(34,211,238,.10), transparent 25%),
+        radial-gradient(circle at 50% 90%, rgba(236,72,153,.08), transparent 30%),
+        var(--bg);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed; inset:0; pointer-events:none; z-index:-1;
+      background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+                       linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+      background-size:46px 46px;
+      mask-image:linear-gradient(to bottom,black,transparent 88%);
+    }
+
+    a{color:inherit;text-decoration:none}
+    .container{width:min(1180px,92%);margin:auto}
+
+    /* Ambient blobs */
+    .orb{
+      position:fixed;border-radius:50%;filter:blur(75px);pointer-events:none;z-index:-1;
+      opacity:.22;animation:float 12s ease-in-out infinite;
+    }
+    .orb.one{width:230px;height:230px;background:var(--a);left:-80px;top:18%}
+    .orb.two{width:180px;height:180px;background:var(--b);right:-50px;top:43%;animation-delay:-4s}
+    .orb.three{width:200px;height:200px;background:var(--c);left:40%;bottom:-100px;animation-delay:-7s}
+    @keyframes float{50%{transform:translate3d(25px,-30px,0) scale(1.08)}}
+
+    /* Nav */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:50;
+      padding:16px 0;
+      background:rgba(6,6,13,.44);
+      border-bottom:1px solid rgba(255,255,255,.055);
+      backdrop-filter:blur(18px);
+    }
+    .nav-inner{display:flex;align-items:center;justify-content:space-between}
+    .brand{
+      font-family:"Space Grotesk",sans-serif;font-weight:700;letter-spacing:.5px;
+      display:flex;align-items:center;gap:10px;
+    }
+    .brand-dot{
+      width:11px;height:11px;border-radius:50%;
+      background:linear-gradient(135deg,var(--b),var(--a),var(--c));
+      box-shadow:0 0 22px rgba(139,92,246,.8);
+    }
+    .nav-links{display:flex;gap:26px;color:#b6b6c7;font-size:14px}
+    .nav-links a{transition:.25s}
+    .nav-links a:hover{color:#fff}
+    .nav-pill{
+      padding:9px 14px;border:1px solid var(--line);border-radius:999px;
+      background:rgba(255,255,255,.04);font-size:13px;color:#ddd;
+    }
+    @media(max-width:760px){.nav-links{display:none}}
+
+    /* Hero */
+    .hero{min-height:100vh;display:grid;place-items:center;padding-top:90px}
+    .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:50px;align-items:center}
+    @media(max-width:850px){.hero-grid{grid-template-columns:1fr;text-align:center;padding:35px 0 80px}.hero-card{max-width:430px;margin:auto}}
+
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border:1px solid var(--line);border-radius:999px;
+      background:rgba(255,255,255,.035);color:#cfcfe0;font-size:12px;
+      letter-spacing:.5px;margin-bottom:22px;
+    }
+    .status{
+      width:7px;height:7px;border-radius:50%;background:#37e39a;
+      box-shadow:0 0 14px #37e39a;
+      animation:pulse 1.7s infinite;
+    }
+    @keyframes pulse{50%{opacity:.35;transform:scale(.7)}}
+
+    h1{
+      font-family:"Space Grotesk",sans-serif;
+      font-size:clamp(54px,8vw,100px);line-height:.93;letter-spacing:-5px;
+      margin-bottom:24px;
+      background:linear-gradient(110deg,#fff 20%,#d9cbff 48%,#7de8ff 88%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      filter:drop-shadow(0 18px 40px rgba(139,92,246,.15));
+    }
+    .hero-copy{font-size:18px;line-height:1.75;color:var(--muted);max-width:670px}
+    .hero-copy strong{color:#ececf6;font-weight:600}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+    @media(max-width:850px){.hero-actions{justify-content:center}}
+
+    .btn{
+      display:inline-flex;align-items:center;gap:9px;
+      padding:13px 17px;border-radius:14px;border:1px solid var(--line);
+      transition:.28s;cursor:pointer;font-size:14px;font-weight:600;
+      background:rgba(255,255,255,.045);
+    }
+    .btn:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.2);box-shadow:0 14px 35px rgba(0,0,0,.25)}
+    .btn.primary{
+      border:none;
+      background:linear-gradient(135deg,var(--a),#6d6cf9);
+      box-shadow:0 12px 35px rgba(109,108,249,.28);
+    }
+    .btn.primary:hover{box-shadow:0 18px 45px rgba(109,108,249,.4)}
+
+    /* Profile hologram */
+    .hero-card{perspective:1000px}
+    .profile{
+      position:relative;min-height:470px;border-radius:32px;padding:1px;
+      background:linear-gradient(140deg,rgba(255,255,255,.20),rgba(255,255,255,.03));
+      box-shadow:var(--glow);
+      transform-style:preserve-3d;transition:transform .18s ease;
+    }
+    .profile-inner{
+      height:100%;min-height:468px;border-radius:31px;padding:28px;
+      background:
+        radial-gradient(circle at 50% 15%,rgba(139,92,246,.24),transparent 29%),
+        linear-gradient(150deg,rgba(19,19,34,.94),rgba(9,9,17,.96));
+      overflow:hidden;position:relative;
+    }
+    .profile-inner::after{
+      content:"";position:absolute;inset:-50%;
+      background:conic-gradient(from 0deg,transparent 0 65%,rgba(34,211,238,.09),transparent 73%);
+      animation:spin 13s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .avatar{
+      width:120px;height:120px;border-radius:50%;margin:28px auto 22px;
+      display:grid;place-items:center;position:relative;z-index:2;
+      font-family:"Space Grotesk";font-size:40px;font-weight:700;
+      background:radial-gradient(circle at 30% 25%,#9e83ff,#5c42cf 55%,#17152c 56%);
+      border:1px solid rgba(255,255,255,.22);
+      box-shadow:0 0 0 9px rgba(139,92,246,.08),0 0 60px rgba(139,92,246,.3);
+    }
+    .profile h3{position:relative;z-index:2;text-align:center;font:700 31px "Space Grotesk";letter-spacing:-1px}
+    .profile-sub{position:relative;z-index:2;text-align:center;color:#9b9bad;margin-top:6px}
+    .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative;z-index:2;margin-top:28px}
+    .mini{
+      border:1px solid var(--line);border-radius:16px;padding:13px;
+      background:rgba(255,255,255,.035);
+    }
+    .mini small{display:block;color:#76768a;font-size:10px;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+    .mini b{font-size:13px;color:#ddd}
+
+    /* Sections */
+    section{padding:110px 0}
+    .section-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:35px}
+    .kicker{font-size:12px;color:#9b9bad;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+    .section-title{font:700 clamp(32px,5vw,54px) "Space Grotesk";letter-spacing:-2px}
+    .section-desc{color:var(--muted);max-width:500px;line-height:1.7}
+    @media(max-width:780px){.section-head{display:block}.section-desc{margin-top:14px}}
+
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    @media(max-width:860px){.cards{grid-template-columns:1fr 1fr}}
+    @media(max-width:570px){.cards{grid-template-columns:1fr}}
+
+    .card{
+      padding:25px;border:1px solid var(--line);border-radius:var(--radius);
+      background:linear-gradient(145deg,rgba(255,255,255,.058),rgba(255,255,255,.018));
+      transition:.28s;position:relative;overflow:hidden;
+    }
+    .card::before{
+      content:"";position:absolute;width:140px;height:140px;border-radius:50%;
+      background:var(--a);filter:blur(55px);opacity:.09;right:-70px;top:-80px;
+    }
+    .card:hover{transform:translateY(-7px);border-color:rgba(255,255,255,.17);box-shadow:0 20px 50px rgba(0,0,0,.24)}
+    .icon{
+      width:47px;height:47px;border-radius:14px;display:grid;place-items:center;
+      background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(34,211,238,.10));
+      border:1px solid rgba(255,255,255,.08);margin-bottom:18px;font-size:20px;
+    }
+    .card h3{font-size:19px;margin-bottom:9px}
+    .card p{font-size:14px;line-height:1.7;color:var(--muted)}
+    .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}
+    .tag{font-size:11px;padding:7px 9px;border-radius:9px;color:#cfcfe0;border:1px solid var(--line);background:rgba(255,255,255,.028)}
+
+    /* About */
+    .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px}
+    @media(max-width:800px){.about-grid{grid-template-columns:1fr}}
+    .about-main,.facts{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);backdrop-filter:blur(18px)}
+    .about-main{padding:34px}
+    .about-main p{color:#aaaabc;line-height:1.9;margin-top:16px}
+    .facts{display:grid;grid-template-columns:1fr 1fr}
+    .fact{padding:27px;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+    .fact:nth-child(2n){border-right:0}
+    .fact:nth-last-child(-n+2){border-bottom:0}
+    @media(max-width:520px){.facts{grid-template-columns:1fr}.fact{border-right:0}.fact:nth-last-child(2){border-bottom:1px solid var(--line)}}
+    .fact span{display:block;color:#77778a;font-size:11px;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px}
+    .fact b{font-size:15px;color:#e9e9f2}
+
+    /* Timeline */
+    .timeline{border-left:1px solid rgba(255,255,255,.13);margin-left:10px;padding-left:29px}
+    .timeline-item{position:relative;margin-bottom:28px}
+    .timeline-item:last-child{margin-bottom:0}
+    .timeline-dot{
+      position:absolute;left:-36px;top:4px;width:13px;height:13px;border-radius:50%;
+      background:linear-gradient(135deg,var(--b),var(--a));box-shadow:0 0 18px rgba(34,211,238,.45);
+    }
+    .timeline-item h3{font-size:16px;margin-bottom:7px}
+    .timeline-item p{color:var(--muted);line-height:1.7;font-size:14px}
+
+    /* Contact */
+    .contact-box{
+      padding:40px;border-radius:32px;border:1px solid var(--line);
+      background:
+        radial-gradient(circle at 15% 30%,rgba(139,92,246,.16),transparent 28%),
+        radial-gradient(circle at 85% 70%,rgba(34,211,238,.11),transparent 28%),
+        rgba(255,255,255,.035);
+      text-align:center;overflow:hidden;position:relative;
+    }
+    .contact-box h2{font:700 clamp(34px,6vw,62px) "Space Grotesk";letter-spacing:-2px}
+    .contact-box p{color:var(--muted);max-width:650px;margin:13px auto 28px;line-height:1.75}
+    .contact-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:11px}
+
+    .contact-btn{min-width:156px;justify-content:center}
+    .contact-btn.discord{background:rgba(88,101,242,.13)}
+    .contact-btn.instagram{background:linear-gradient(135deg,rgba(245,133,41,.12),rgba(193,53,132,.13),rgba(131,58,180,.13))}
+    .contact-btn.whatsapp{background:rgba(37,211,102,.10)}
+    .contact-btn.email{background:rgba(34,211,238,.09)}
+
+    footer{padding:34px 0 55px;color:#686879;font-size:12px}
+    .footer-line{height:1px;background:var(--line);margin-bottom:23px}
+    .footer-flex{display:flex;justify-content:space-between;gap:20px}
+    @media(max-width:600px){.footer-flex{display:block}.footer-flex div:last-child{margin-top:8px}}
+
+    /* Scroll reveal */
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .75s ease,transform .75s ease}
+    .reveal.show{opacity:1;transform:none}
+
+    /* Loading line */
+    .loader{
+      position:fixed;top:0;left:0;width:100%;height:2px;z-index:100;
+      transform-origin:left;transform:scaleX(0);
+      background:linear-gradient(90deg,var(--a),var(--b),var(--c));
+      box-shadow:0 0 15px rgba(139,92,246,.8);
+    }
+
+    /* Particle canvas */
+    #particles{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.65}
+
+    .shine{
+      background:linear-gradient(120deg,transparent 20%,rgba(255,255,255,.08) 45%,transparent 70%);
+      background-size:200% 100%;
+      animation:shine 6s linear infinite;
+    }
+    @keyframes shine{to{background-position:-200% 0}}
+  </style>
+</head>
+
+<body>
+  <div class="loader" id="loader"></div>
+  <canvas id="particles"></canvas>
+
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+  <div class="orb three"></div>
+
+  <nav>
+    <div class="container nav-inner">
+      <a class="brand" href="#top"><span class="brand-dot"></span>SEMON</a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#interests">Interests</a>
+        <a href="#connect">Connect</a>
+      </div>
+      <a class="nav-pill" href="#connect">Find me online ↗</a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <div class="eyebrow"><span class="status"></span> Exploring ideas through code</div>
+          <h1>Hi, I'm<br>Semon.</h1>
+          <p class="hero-copy">
+            A <strong>Java developer</strong> who enjoys turning ideas into software,
+            experimenting with new technology, building Minecraft plugins and mods,
+            and creating clean web experiences.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="#about">Explore my profile ↓</a>
+            <a class="btn" href="#connect">My links ↗</a>
+          </div>
+        </div>
+
+        <div class="hero-card reveal">
+          <div class="profile" id="tiltCard">
+            <div class="profile-inner">
+              <div class="avatar">S</div>
+              <h3>Semon</h3>
+              <div class="profile-sub">Developer • Creator • Learner</div>
+
+              <div class="mini-grid">
+                <div class="mini"><small>Based in</small><b>Mohammadpur</b></div>
+                <div class="mini"><small>Age</small><b>14 years</b></div>
+                <div class="mini"><small>Main focus</small><b>Java</b></div>
+                <div class="mini"><small>Enjoys</small><b>Online work</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="kicker">01 — About</div>
+            <h2 class="section-title">A little about me.</h2>
+          </div>
+          <p class="section-desc">A simple snapshot of who I am, what I enjoy and the direction I like to explore.</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-main reveal shine">
+            <div class="kicker">Profile</div>
+            <p>
+              My name is <strong>Semon</strong>. I live in <strong>Mohammadpur</strong> and
+              I enjoy spending time online learning, experimenting and creating things with code.
+              Programming is something I genuinely like exploring, especially when I can turn
+              a small idea into something people can actually use.
+            </p>
+            <p>
+              I work mainly with Java and enjoy the wider world around software:
+              applications, websites, Minecraft development, scripting and technical experiments.
+              I like learning by building, testing and improving.
+            </p>
+          </div>
+
+          <div class="facts reveal">
+            <div class="fact"><span>Name</span><b>Semon</b></div>
+            <div class="fact"><span>Age</span><b>14 years old</b></div>
+            <div class="fact"><span>Location</span><b>Mohammadpur</b></div>
+            <div class="fact"><span>Field</span><b>Programming & Development</b></div>
+            <div class="fact"><span>Favourite area</span><b>Java development</b></div>
+            <div class="fact"><span>Style</span><b>Learn • Build • Improve</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="kicker">02 — Skills</div>
+            <h2 class="section-title">Things I like building.</h2>
+          </div>
+          <p class="section-desc">Different technologies, one common theme: creating useful and interesting digital things.</p>
+        </div>
+
+        <div class="cards">
+          <article class="card reveal">
+            <div class="icon">☕</div>
+            <h3>Java Development</h3>
+            <p>Working with Java and using it to explore software ideas, application logic and development projects.</p>
+            <div class="tag-row"><span class="tag">Java</span><span class="tag">Logic</span><span class="tag">Development</span></div>
+          </article>
+
+          <article class="card reveal">
+            <div class="icon">⌘</div>
+            <h3>Apps & Websites</h3>
+            <p>Building digital experiences, experimenting with interfaces and turning concepts into working applications and web pages.</p>
+            <div class="tag-row"><span class="tag">Apps</span><span class="tag">Web</span><span class="tag">UI</span></div>
+          </article>
+
+          <article class="card reveal">
+            <div class="icon">◈</div>
+            <h3>Minecraft Development</h3>
+            <p>Creating Minecraft plugins and mods, exploring game mechanics and working on custom features.</p>
+            <div class="tag-row"><span class="tag">Plugins</span><span class="tag">Mods</span><span class="tag">Minecraft</span></div>
+          </article>
+
+          <article class="card reveal">
+            <div class="icon">✦</div>
+            <h3>Scripting</h3>
+            <p>Familiar with CCA+ and Java skripts, with a focus on experimenting with automation and custom behaviour.</p>
+            <div class="tag-row"><span class="tag">CCA+</span><span class="tag">Java Skripts</span><span class="tag">Automation</span></div>
+          </article>
+
+          <article class="card reveal">
+            <div class="icon">⚙</div>
+            <h3>Problem Solving</h3>
+            <p>Breaking larger ideas into smaller pieces, testing different approaches and improving results through iteration.</p>
+            <div class="tag-row"><span class="tag">Debugging</span><span class="tag">Testing</span><span class="tag">Logic</span></div>
+          </article>
+
+          <article class="card reveal">
+            <div class="icon">↗</div>
+            <h3>Learning by Building</h3>
+            <p>Exploring new technologies through hands-on projects instead of only reading about how they work.</p>
+            <div class="tag-row"><span class="tag">Curiosity</span><span class="tag">Practice</span><span class="tag">Growth</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="interests">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="kicker">03 — Interests</div>
+            <h2 class="section-title">What keeps me curious.</h2>
+          </div>
+          <p class="section-desc">I enjoy discovering what is possible when creativity meets technology.</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-main reveal">
+            <div class="timeline">
+              <div class="timeline-item">
+                <span class="timeline-dot"></span>
+                <h3>Coding & experiments</h3>
+                <p>I enjoy writing code, testing ideas and seeing how different pieces of software work together.</p>
+              </div>
+              <div class="timeline-item">
+                <span class="timeline-dot"></span>
+                <h3>Online work</h3>
+                <p>Much of my creative time happens online, where I can learn, explore communities and work on digital projects.</p>
+              </div>
+              <div class="timeline-item">
+                <span class="timeline-dot"></span>
+                <h3>Games & Minecraft</h3>
+                <p>Minecraft development is one of the places where coding and creativity come together for me.</p>
+              </div>
+              <div class="timeline-item">
+                <span class="timeline-dot"></span>
+                <h3>Learning new technology</h3>
+                <p>I like trying unfamiliar tools and gradually understanding how they can be used to build something better.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-main reveal">
+            <div class="kicker">Mindset</div>
+            <h3 style="font:700 32px 'Space Grotesk';letter-spacing:-1px;margin-top:5px;">Build. Break. Learn. Repeat.</h3>
+            <p>
+              I enjoy the process as much as the result: starting with an idea,
+              making a first version, finding what does not work, and learning enough
+              to make the next version better.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Creative</span>
+              <span class="tag">Curious</span>
+              <span class="tag">Technical</span>
+              <span class="tag">Consistent</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="connect">
+      <div class="container">
+        <div class="contact-box reveal">
+          <div class="kicker">04 — Connect</div>
+          <h2>Find Semon online.</h2>
+          <p>
+            These are the places where you can find me online and stay connected.
+          </p>
+
+          <div class="contact-actions">
+            <a class="btn contact-btn discord" href="https://discord.com/users/1407410273505120409" target="_blank" rel="noopener noreferrer">
+              Discord ↗
+            </a>
+            <a class="btn contact-btn instagram" href="https://www.instagram.com/imsemon049/" target="_blank" rel="noopener noreferrer">
+              Instagram ↗
+            </a>
+            <a class="btn contact-btn whatsapp" href="https://wa.me/8801811010070" target="_blank" rel="noopener noreferrer">
+              WhatsApp ↗
+            </a>
+            <a class="btn contact-btn email" href="mailto:ahmedsemon049@gmail.com">
+              Email ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-line"></div>
+      <div class="footer-flex">
+        <div>© <span id="year"></span> Semon</div>
+        <div>Made with code, curiosity & late-night ideas.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if(entry.isIntersecting) {
+          entry.target.classList.add('show');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => revealObserver.observe(el));
+
+    // Reading progress
+    const loader = document.getElementById('loader');
+    window.addEventListener('scroll', () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? window.scrollY / max : 0;
+      loader.style.transform = `scaleX(${progress})`;
+    });
+
+    // 3D tilt on profile card
+    const card = document.getElementById('tiltCard');
+    if (card && window.matchMedia('(pointer:fine)').matches) {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+      });
+    }
+
+    // Animated particles
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let w = 0, h = 0;
+
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth * devicePixelRatio;
+      h = canvas.height = window.innerHeight * devicePixelRatio;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    }
+
+    function makeParticles() {
+      const count = Math.min(75, Math.floor(window.innerWidth / 18));
+      particles = Array.from({length: count}, () => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        vx: (Math.random() - .5) * .22,
+        vy: (Math.random() - .5) * .22,
+        r: Math.random() * 1.6 + .4
+      }));
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+      particles.forEach((p, i) => {
+        p.x += p.vx; p.y += p.vy;
+        if(p.x < -10) p.x = window.innerWidth + 10;
+        if(p.x > window.innerWidth + 10) p.x = -10;
+        if(p.y < -10) p.y = window.innerHeight + 10;
+        if(p.y > window.innerHeight + 10) p.y = -10;
+
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle='rgba(160,150,255,.52)';
+        ctx.fill();
+
+        for(let j=i+1;j<particles.length;j++){
+          const q=particles[j];
+          const dx=p.x-q.x, dy=p.y-q.y;
+          const d=Math.sqrt(dx*dx+dy*dy);
+          if(d<105){
+            ctx.beginPath();
+            ctx.moveTo(p.x,p.y);
+            ctx.lineTo(q.x,q.y);
+            ctx.strokeStyle=`rgba(139,92,246,${(1-d/105)*.10})`;
+            ctx.lineWidth=1;
+            ctx.stroke();
+          }
+        }
+      });
+      requestAnimationFrame(drawParticles);
+    }
+
+    resizeCanvas();
+    makeParticles();
+    drawParticles();
+    window.addEventListener('resize', () => { resizeCanvas(); makeParticles(); });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
